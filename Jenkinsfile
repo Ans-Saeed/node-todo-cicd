@@ -13,7 +13,7 @@ pipeline {
             sh 'docker push anssaeed/my-repo:todoapp-latest'
             }        
         }
-    
+        }
     stage('RUN') {
             steps {
                 sh 'echo Running the application...'
