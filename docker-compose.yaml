@@ -1,6 +1,6 @@
 version: "3.9"
 services:
   todo-app:
-    build: .
+    image: anssaeed/my-repo:todoapp:latest
     ports:
       - "8000:8000"
