@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  todo-app:
+    build: .
+    ports:
+      - "8000:8000"
