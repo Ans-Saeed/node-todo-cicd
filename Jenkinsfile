@@ -2,6 +2,11 @@ pipeline {
     agent  any
 
     stages {
+        stage('version bump'){
+            steps{
+                   sh 'npm version patch'
+            }
+        }
         stage('Build') {
             steps {
                  withCredentials([
@@ -20,9 +25,8 @@ pipeline {
                 sh 'docker-compose down && docker-compose up -d'
             }        
         }  
-     stage('Version Bump and Commit') {
-            steps {
-                sh 'npm version patch'
+     stage('Version Commit') {
+            steps {         
                 withCredentials([
         usernamePassword(credentialsId:'eb7ded11-68c4-4f9e-9f2f-dd16e659433c', usernameVariable: 'USER', passwordVariable: 'PASS')
     ]){
