@@ -10,7 +10,13 @@ pipeline {
                 }
             }
         }
-
+        stage('version bump'){
+            steps{
+                script{
+                    gv.incrementVersion()
+                }
+            }
+        }
         stage('Build') {
             steps {
                 script{
@@ -25,13 +31,7 @@ pipeline {
                 }
             }        
         }
-         stage('version bump'){
-            steps{
-                script{
-                    gv.incrementVersion()
-                }
-            }
-        }
+         
      stage('Version Commit') {
             steps {         
                 script{
