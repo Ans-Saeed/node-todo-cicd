@@ -6,10 +6,7 @@ def buildImage(){
    withCredentials([
         usernamePassword(credentialsId:'dockerhub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')
     ]){
-            echo "building the docker image of application..."
-            def packageJson = readJSON file: 'package.json'
-          def version = packageJson.version
-          println "Version number: ${version}"
+            echo "building the docker image of application..."         
             sh 'docker build -t anssaeed/my-repo:${IMAGE_NAME} .'
             sh 'echo $PASS | docker login -u $USER --password-stdin'
             sh 'docker push anssaeed/my-repo:${IMAGE_NAME}'
@@ -18,8 +15,10 @@ def buildImage(){
 }
 
 def incrementVersion(){
-        sh 'npm --no-git-tag-version version patch'                 
-                   env.IMAGE_NAME=readJSON(file: 'package.json').version
+        sh 'npm --no-git-tag-version version patch'        
+        def packageJson = readJSON file: 'package.json'
+        def version = packageJson.version
+        env.IMAGE_NAME=$version-$BUILD_NUMBER"
                     
 }
 
