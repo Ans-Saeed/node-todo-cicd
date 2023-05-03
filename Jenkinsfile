@@ -2,20 +2,16 @@ pipeline {
     agent  any
 
     stages {
-        stage('version bump'){
-            steps{
-                   sh 'npm --no-git-tag-version version patch'
-            }
-        }
+       
         stage('Build') {
             steps {
                  withCredentials([
         usernamePassword(credentialsId:'dockerhub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')
     ]){
             echo "building the docker image of application..."
-            sh 'docker build -t anssaeed/my-repo:todoapp-latest .'
+            sh 'docker build -t anssaeed/my-repo:${IMAGR_NAME} .'
             sh 'echo $PASS | docker login -u $USER --password-stdin'
-            sh 'docker push anssaeed/my-repo:todoapp-latest'
+            sh 'docker push anssaeed/my-repo:${IMAGR_NAME}'
             }        
         }
         }
@@ -24,7 +20,16 @@ pipeline {
                 sh 'echo Running the application...'
                 sh 'docker-compose down && docker-compose up -d'
             }        
-        }  
+        }
+         stage('version bump'){
+            steps{
+                   sh 'npm --no-git-tag-version version patch'
+                   def matcher = readFile('package.json.xml') =~ '<version>(.+)</version>'
+                   def version =matcher[0][1]
+                   env.IMAGE_NAME="$version-$BUILD_NUMBER"
+
+            }
+        }
      stage('Version Commit') {
             steps {         
                 withCredentials([
