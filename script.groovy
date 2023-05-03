@@ -7,7 +7,7 @@ def buildImage(){
         usernamePassword(credentialsId:'dockerhub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')
     ]){
             echo "building the docker image of application..."
-            def image= sh "cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g'"
+            def image= sh "cat package.json | grep version | head -1 | awk -F: '{ print ${2} }' | sed 's/[",]//g'"
             env.IMAGE_NAME= $image
             sh "echo ${IMAGE_NAME}"
             sh 'docker build -t anssaeed/my-repo:${IMAGE_NAME} .'
