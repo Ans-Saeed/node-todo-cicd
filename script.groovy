@@ -7,9 +7,9 @@ def buildImage(){
         usernamePassword(credentialsId:'dockerhub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')
     ]){
             echo "building the docker image of application..."
-            def image= sh "cat package.json | grep version | head -1 | awk -F: '{ print ${2} }' | sed 's/[",]//g'"
-            env.IMAGE_NAME= $image
-            sh "echo ${IMAGE_NAME}"
+            def matcher = readFile('pom.xml') =~ '"version"'
+       
+            sh "echo ${matcher}"
             sh 'docker build -t anssaeed/my-repo:${IMAGE_NAME} .'
             sh 'echo $PASS | docker login -u $USER --password-stdin'
             sh 'docker push anssaeed/my-repo:${IMAGE_NAME}'
