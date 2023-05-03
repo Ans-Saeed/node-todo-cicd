@@ -18,7 +18,7 @@ def incrementVersion(){
         sh 'npm --no-git-tag-version version patch'        
         def packageJson = readJSON file: 'package.json'
         def version = packageJson.version
-        env.IMAGE_NAME=$version-$BUILD_NUMBER"
+        env.IMAGE_NAME="$version-$BUILD_NUMBER"
                     
 }
 
