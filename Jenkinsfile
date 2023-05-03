@@ -28,14 +28,14 @@ pipeline {
      stage('Version Commit') {
             steps {         
                 withCredentials([
-        usernamePassword(credentialsId:'eb7ded11-68c4-4f9e-9f2f-dd16e659433c', usernameVariable: 'USER', passwordVariable: 'PASS')
+        usernamePassword(credentialsId:'git-hub-access-key', usernameVariable: 'USER', passwordVariable: 'PASS')
     ]){
 
                 sh 'echo Minor Version Bump...'
                 sh 'git status'
                 sh 'git config user.email jenkins@example.com'
                 sh 'git config user.name jenkins'
-                sh "git remote set-url origin https://${USER}:${PASS}@github.com/Ans-Saeed/node-todo-cicd.git"
+                    sh "git remote set-url origin https://${PASS}@github.com/${USER}/github.com/Ans-Saeed/node-todo-cicd.git"
                 sh 'git add .'
                 sh 'git commit -m "[ci skip] : version bump"'
                 sh 'git push origin HEAD:master'
