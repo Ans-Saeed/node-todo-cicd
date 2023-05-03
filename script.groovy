@@ -7,9 +7,9 @@ def buildImage(){
         usernamePassword(credentialsId:'dockerhub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')
     ]){
             echo "building the docker image of application..."
-            def matcher = readFile('package.json') =~ 'version(.+)'
-       
-            sh "echo ${matcher}"
+            def packageJson = readJSON file: 'package.json'
+          def version = packageJson.version
+          println "Version number: ${version}"
             sh 'docker build -t anssaeed/my-repo:${IMAGE_NAME} .'
             sh 'echo $PASS | docker login -u $USER --password-stdin'
             sh 'docker push anssaeed/my-repo:${IMAGE_NAME}'
