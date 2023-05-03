@@ -35,7 +35,7 @@ pipeline {
                 sh 'git status'
                 sh 'git config user.email jenkins@example.com'
                 sh 'git config user.name jenkins'
-                    sh "git remote set-url origin https://${PASS}@github.com/${USER}/github.com/Ans-Saeed/node-todo-cicd.git"
+                    sh "git remote set-url origin https://${PASS}@github.com/${USER}/node-todo-cicd.git"
                 sh 'git add .'
                 sh 'git commit -m "[ci skip] : version bump"'
                 sh 'git push origin HEAD:master'
