@@ -20,7 +20,7 @@ app.use(methodOverride(function (req, res) {
     }
 }));
 
-#Some change
+
 let todolist = [];
 
 /* The to do list and the form are displayed */
