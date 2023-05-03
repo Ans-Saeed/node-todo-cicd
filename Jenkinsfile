@@ -24,9 +24,9 @@ pipeline {
          stage('version bump'){
             steps{
                    sh 'npm --no-git-tag-version version patch'
-                   def matcher = readFile('package.json.xml') =~ '<version>(.+)</version>'
-                   def version =matcher[0][1]
-                   env.IMAGE_NAME="$version-$BUILD_NUMBER"
+                   sh 'def matcher = readFile('package.json.xml') =~ '<version>(.+)</version>''
+                   sh 'def version =matcher[0][1]'
+                   sh 'env.IMAGE_NAME="$version-$BUILD_NUMBER"'
 
             }
         }
