@@ -1,7 +1,7 @@
 def gv
 pipeline {
     agent  any
-
+#Checking the jenkins commit skip build
     stages {
       stage('Checkout') {
              steps {
