@@ -16,13 +16,9 @@ def buildImage(){
 }
 
 def incrementVersion(){
-        sh 'npm --no-git-tag-version version patch'
-                   def matcher = readFile('package.json') =~ '"version"'
-                     echo $matcher
-                   def version =matcher[0][1]
-                     echo $version
-                   env.IMAGE_NAME="$version-$BUILD_NUMBER"
-                     echo $IMAGE_NAME
+        sh 'npm --no-git-tag-version version patch'                 
+                   env.IMAGE_NAME=readJSON(file: 'package.json').version
+                    
 }
 
 def commitVersion(){
